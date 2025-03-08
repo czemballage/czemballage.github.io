@@ -67,8 +67,10 @@ DEFAULT: '8px',
   <nav class="container mx-auto px-6 py-4">
     <div class="flex items-center justify-between">
       <div class="flex items-center">
-        <img src="https://i.ibb.co/S76frvbb/image.png" alt="CZ Emballage Logo" class="h-12">
-        <div class="site-title text-2xl font-black mr-3">CZ Emballage</div>
+        <img src="https://i.ibb.co/S76frvbb/image.png" alt="CZ Emballage Logo" class="h-16">
+        <div class="site-title text-2xl font-black mr-3">
+          <span class="cz-text text-primary">CZ</span> <span class="text-black">Emballage</span>
+        </div>
       </div>
       <div class="hidden md:flex items-center space-x-8 space-x-reverse">
         <a href="#home" class="text-secondary hover:text-primary transition-colors font-bold">الرئيسية</a>
@@ -99,7 +101,7 @@ DEFAULT: '8px',
 <div class="text-white max-w-2xl">
 <h1 class="text-5xl font-bold mb-6">حلول التغليف المبتكرة</h1>
 <p class="text-xl mb-8">نقدم أفضل الحلول في مجال الصناديع الكرتونية بجودة عالية وتصاميم مبتكرة تلبي احتياجات عملائنا</p>
-<button id="hero-button" class="bg-primary text-white px-8 py-3 !rounded-button hover:bg-opacity-90 transition-colors btn-primary hero-button">تعرف على المزيد</button>
+<button id="hero-button" onclick="window.location.href='#contact'" class="bg-primary text-white px-8 py-3 !rounded-button hover:bg-opacity-90 transition-colors btn-primary hero-button">اطلب الآن</button>
 </div>
 </div>
 </section>
@@ -113,21 +115,21 @@ DEFAULT: '8px',
     <p class="text-gray-600 mb-6">نحن شركة متخصصة في تصنيع الصناديع الكرتونية بجميع أنواعها وأحجامها. نمتلك خبرة تزيد عن 10 أعوام في هذا المجال.</p>
   </div>
   <div class="grid grid-cols-2 md:grid-cols-4 gap-8 w-full">
-    <div class="text-center p-6 bg-secondary rounded-lg transform hover:scale-105 transition-transform duration-300">
-      <div class="text-4xl font-bold text-primary mb-2" data-count="10">10+</div>
-      <div class="text-gray-400">سنوات من الخبرة</div>
+    <div class="text-center p-6 bg-white border border-gray-100 rounded-lg transform hover:scale-105 transition-transform duration-300 shadow-sm">
+      <div class="text-4xl font-bold text-primary mb-2">10+</div>
+      <div class="text-gray-500">سنوات من الخبرة</div>
     </div>
-    <div class="text-center p-6 bg-secondary rounded-lg transform hover:scale-105 transition-transform duration-300">
-      <div class="text-4xl font-bold text-primary mb-2" data-count="1000">1000+</div>
-      <div class="text-gray-400">عميل راضٍ</div>
+    <div class="text-center p-6 bg-white border border-gray-100 rounded-lg transform hover:scale-105 transition-transform duration-300 shadow-sm">
+      <div class="text-4xl font-bold text-primary mb-2">1000+</div>
+      <div class="text-gray-500">عميل راضٍ</div>
     </div>
-    <div class="text-center p-6 bg-secondary rounded-lg transform hover:scale-105 transition-transform duration-300">
-      <div class="text-4xl font-bold text-primary mb-2" data-count="50">50+</div>
-      <div class="text-gray-400">موظف متخصص</div>
+    <div class="text-center p-6 bg-white border border-gray-100 rounded-lg transform hover:scale-105 transition-transform duration-300 shadow-sm">
+      <div class="text-4xl font-bold text-primary mb-2">50+</div>
+      <div class="text-gray-500">موظف متخصص</div>
     </div>
-    <div class="text-center p-6 bg-secondary rounded-lg transform hover:scale-105 transition-transform duration-300">
-      <div class="text-4xl font-bold text-primary mb-2" data-count="24/7">24/7</div>
-      <div class="text-gray-400">دعم فني</div>
+    <div class="text-center p-6 bg-white border border-gray-100 rounded-lg transform hover:scale-105 transition-transform duration-300 shadow-sm">
+      <div class="text-4xl font-bold text-primary mb-2">24/7</div>
+      <div class="text-gray-500">دعم فني</div>
     </div>
   </div>
 </div>
@@ -136,7 +138,7 @@ DEFAULT: '8px',
 <section id="products" class="py-20 bg-gradient-to-b from-gray-50 to-white">
 <div class="container mx-auto px-6">
 <h2 class="text-4xl font-bold text-center mb-4">منتجاتنا</h2>
-<p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">نقدم مجموعة متنوعة من الحلول المبتكرة في مجال التعبئة والتغليف لتلبية احتياجات工作ائنا المختلفة</p>
+<p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">نقدم مجموعة متنوعة من الحلول المبتكرة في مجال التعبئة والتغليف لتلبية احتياجات عملائنا المختلفة</p>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
 <div class="group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden product-card">
 <div class="relative">
@@ -297,7 +299,7 @@ DEFAULT: '8px',
 <section id="testimonials" class="py-20 bg-gray-50">
   <div class="container mx-auto px-6">
     <h2 class="text-4xl font-bold text-center mb-4">آراء عملائنا</h2>
-    <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">نفتخر بثقة عملائنا ورضاهمティ منتجاتنا وخدماتنا</p>
+    <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">نفتخر بثقة عملائنا ورضاهم عن منتجاتنا وخدماتنا</p>
     
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       <div class="testimonial-card">
@@ -372,7 +374,7 @@ DEFAULT: '8px',
       </div>
       <div>
         <h3 class="text-xl font-bold mb-2">البريد الإلكتروني</h3>
-        <p class="text-gray-600"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e0898e868fa0839a858d82818c8c818785ce838f8d">[email&#160;protected]</a></p>
+        <p class="text-gray-600"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fd94939b92bd9e8798909f9c91919c9a98d39e9290">[email&#160;protected]</a></p>
       </div>
     </div>
     
@@ -414,9 +416,11 @@ DEFAULT: '8px',
   <div>
     <div class="flex items-center mb-6">
       <div class="bg-white p-2 rounded-lg">
-        <img src="https://i.ibb.co/S76frvbb/image.png" alt="CZ Emballage Logo" class="h-12">
+        <img src="https://i.ibb.co/S76frvbb/image.png" alt="CZ Emballage Logo" class="h-16">
       </div>
-      <div class="text-2xl font-['Pacifico'] text-primary mr-3">CZ Emballage</div>
+      <div class="site-title text-2xl font-black mr-3">
+        <span class="cz-text text-primary">CZ</span> <span class="text-black">Emballage</span>
+      </div>
     </div>
     <p class="text-gray-400 mb-6">رائدون في صناعة الصناديع الكرتونية عالية الجودة لأكثر من 20 عامًا.</p>
     <div class="social-icons flex space-x-3 space-x-reverse">
@@ -450,7 +454,7 @@ DEFAULT: '8px',
       </li>
       <li class="flex items-start">
         <i class="ri-mail-line text-primary ml-3 mt-1"></i>
-        <span class="text-gray-400"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fe97909891be9d849b939c9f92929f999bd09d9193">[email&#160;protected]</a></span>
+        <span class="text-gray-400"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="61080f070e21021b040c03000d0d0006044f020e0c">[email&#160;protected]</a></span>
       </li>
       <li class="flex items-start">
         <i class="ri-time-line text-primary ml-3 mt-1"></i>
@@ -504,21 +508,21 @@ about: `<section id="about" class="py-20 fade-in about-section-bg">
     <p class="text-gray-600 mb-6">نحن شركة متخصصة في تصنيع الصناديع الكرتونية بجميع أنواعها وأحجامها. نمتلك خبرة تزيد عن 10 أعوام في هذا المجال.</p>
   </div>
   <div class="grid grid-cols-2 md:grid-cols-4 gap-8 w-full">
-    <div class="text-center p-6 bg-secondary rounded-lg transform hover:scale-105 transition-transform duration-300">
+    <div class="text-center p-6 bg-white border border-gray-100 rounded-lg transform hover:scale-105 transition-transform duration-300 shadow-sm">
       <div class="text-4xl font-bold text-primary mb-2">10+</div>
-      <div class="text-gray-400">سنوات من الخبرة</div>
+      <div class="text-gray-500">سنوات من الخبرة</div>
     </div>
-    <div class="text-center p-6 bg-secondary rounded-lg transform hover:scale-105 transition-transform duration-300">
+    <div class="text-center p-6 bg-white border border-gray-100 rounded-lg transform hover:scale-105 transition-transform duration-300 shadow-sm">
       <div class="text-4xl font-bold text-primary mb-2">1000+</div>
-      <div class="text-gray-400">عميل راضٍ</div>
+      <div class="text-gray-500">عميل راضٍ</div>
     </div>
-    <div class="text-center p-6 bg-secondary rounded-lg transform hover:scale-105 transition-transform duration-300">
+    <div class="text-center p-6 bg-white border border-gray-100 rounded-lg transform hover:scale-105 transition-transform duration-300 shadow-sm">
       <div class="text-4xl font-bold text-primary mb-2">50+</div>
-      <div class="text-gray-400">موظف متخصص</div>
+      <div class="text-gray-500">موظف متخصص</div>
     </div>
-    <div class="text-center p-6 bg-secondary rounded-lg transform hover:scale-105 transition-transform duration-300">
+    <div class="text-center p-6 bg-white border border-gray-100 rounded-lg transform hover:scale-105 transition-transform duration-300 shadow-sm">
       <div class="text-4xl font-bold text-primary mb-2">24/7</div>
-      <div class="text-gray-400">دعم فني</div>
+      <div class="text-gray-500">دعم فني</div>
     </div>
   </div>
 </div>
