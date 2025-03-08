@@ -63,7 +63,10 @@ document.querySelectorAll('.product-card').forEach(card => {
 
 // Enhanced Video Carousel
 function initVideoCarousel() {
+  // Check if carousel exists before initializing
   const carousel = document.querySelector('.video-carousel');
+  if (!carousel) return;
+  
   const slides = carousel.querySelectorAll('.video-slide');
   let currentIndex = 0;
 
@@ -89,12 +92,15 @@ function initVideoCarousel() {
       
       // Reset video when switching slides
       const iframe = slide.querySelector('iframe');
-      const src = iframe.src;
-      iframe.src = src;
+      if (iframe) {
+        const src = iframe.src;
+        iframe.src = src;
+      }
     });
     
     // Update indicators
-    indicators.querySelectorAll('.carousel-indicator').forEach((dot, index) => {
+    const indicatorDots = indicators.querySelectorAll('.carousel-indicator');
+    indicatorDots.forEach((dot, index) => {
       dot.classList.toggle('active', index === currentIndex);
     });
   }
@@ -114,12 +120,25 @@ function initVideoCarousel() {
     updateSlides();
   }
 
-  // Create and set up navigation buttons
-  const prevButton = carousel.querySelector('#prevVideo');
-  const nextButton = carousel.querySelector('#nextVideo');
+  // Create and set up navigation buttons if they don't exist
+  let prevButton = carousel.querySelector('#prevVideo');
+  let nextButton = carousel.querySelector('#nextVideo');
   
-  prevButton.className = 'carousel-nav-button prev';
-  nextButton.className = 'carousel-nav-button next';
+  if (!prevButton) {
+    prevButton = document.createElement('button');
+    prevButton.id = 'prevVideo';
+    prevButton.className = 'carousel-nav-button prev';
+    prevButton.innerHTML = '<i class="ri-arrow-right-s-line"></i>';
+    carousel.appendChild(prevButton);
+  }
+  
+  if (!nextButton) {
+    nextButton = document.createElement('button');
+    nextButton.id = 'nextVideo';
+    nextButton.className = 'carousel-nav-button next';
+    nextButton.innerHTML = '<i class="ri-arrow-left-s-line"></i>';
+    carousel.appendChild(nextButton);
+  }
   
   prevButton.addEventListener('click', prevSlide);
   nextButton.addEventListener('click', nextSlide);
