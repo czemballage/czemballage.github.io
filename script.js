@@ -157,23 +157,34 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initialize GSAP animations
   gsapInit();
   
-  // Mobile menu functionality
+  // Enhanced mobile menu functionality
   const mobileMenuButton = document.getElementById('mobile-menu-button');
   const mobileMenu = document.getElementById('mobile-menu');
   
   if (mobileMenuButton && mobileMenu) {
     mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('active');
       mobileMenu.classList.toggle('hidden');
-      if(!mobileMenu.classList.contains('hidden')) {
-        gsap.to(mobileMenu, {height: 'auto', duration: 0.3, ease: 'power2.out'});
+      
+      if(mobileMenu.classList.contains('active')) {
+        gsap.to(mobileMenu, {
+          maxHeight: '300px',
+          duration: 0.3,
+          ease: 'power2.out'
+        });
         mobileMenuButton.innerHTML = '<i class="ri-close-line ri-2x"></i>';
       } else {
-        gsap.to(mobileMenu, {height: 0, duration: 0.3, ease: 'power2.in'});
+        gsap.to(mobileMenu, {
+          maxHeight: 0,
+          duration: 0.3,
+          ease: 'power2.in',
+          onComplete: () => mobileMenu.classList.add('hidden')
+        });
         mobileMenuButton.innerHTML = '<i class="ri-menu-line ri-2x"></i>';
       }
     });
   }
-
+  
   // Close mobile menu when clicking on links
   if (mobileMenu) {
     mobileMenu.querySelectorAll('a').forEach(link => {
@@ -229,6 +240,38 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
   });
+  
+  // Fix scroll animations
+  ScrollTrigger.batch(".fade-in", {
+    onEnter: batch => gsap.to(batch, {
+      opacity: 1,
+      y: 0,
+      stagger: 0.15,
+      duration: 0.8,
+      ease: "power2.out"
+    }),
+    start: "top 85%"
+  });
+  
+  // Enhanced logo animation
+  const logo = document.querySelector('header img');
+  if (logo) {
+    logo.addEventListener('mouseenter', () => {
+      gsap.to(logo, {
+        scale: 1.1,
+        duration: 0.3,
+        ease: "power2.out"
+      });
+    });
+    
+    logo.addEventListener('mouseleave', () => {
+      gsap.to(logo, {
+        scale: 1,
+        duration: 0.3,
+        ease: "power2.in"
+      });
+    });
+  }
   
   // Add smooth reveal animations as sections come into view
   gsap.registerPlugin(ScrollTrigger);
@@ -860,5 +903,75 @@ document.addEventListener('DOMContentLoaded', () => {
         ease: 'none'
       });
     }
+  });
+});
+
+// Enhanced section reveal animations
+function initEnhancedSectionAnimations() {
+  gsap.utils.toArray('section').forEach(section => {
+    gsap.from(section, {
+      scrollTrigger: {
+        trigger: section,
+        start: 'top 80%',
+        end: 'top 20%',
+        scrub: 1
+      },
+      y: 50,
+      opacity: 0.5,
+      duration: 1,
+      ease: 'power2.out'
+    });
+  });
+}
+
+// Enhanced card animations
+function initEnhancedCardAnimations() {
+  gsap.utils.toArray('.product-card, .service-card, .testimonial-card').forEach(card => {
+    gsap.to(card, {
+      scrollTrigger: {
+        trigger: card,
+        start: 'top 90%',
+        end: 'top 60%',
+        scrub: 1
+      },
+      y: -20,
+      duration: 1,
+      ease: 'power2.out'
+    });
+  });
+}
+
+// Add smooth page transitions
+function initPageTransitions() {
+  gsap.to('body', {
+    opacity: 1,
+    duration: 0.5,
+    ease: 'power2.out'
+  });
+}
+
+// Initialize new animations
+document.addEventListener('DOMContentLoaded', () => {
+  initEnhancedSectionAnimations();
+  initEnhancedCardAnimations();
+  initPageTransitions();
+  
+  // Add hover animations for interactive elements
+  gsap.utils.toArray('a, button').forEach(elem => {
+    elem.addEventListener('mouseenter', () => {
+      gsap.to(elem, {
+        scale: 1.05,
+        duration: 0.3,
+        ease: 'power2.out'
+      });
+    });
+    
+    elem.addEventListener('mouseleave', () => {
+      gsap.to(elem, {
+        scale: 1,
+        duration: 0.3,
+        ease: 'power2.in'
+      });
+    });
   });
 });
