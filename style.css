@@ -29,7 +29,7 @@ body::before {
   );
   background-size: 400% 400%;
   z-index: -1;
-  animation: gradientBG 15s ease infinite;
+  animation: gradientBG 15s ease infinite, pulse 2s ease-in-out infinite;
   opacity: 0.97;
 }
 
@@ -43,6 +43,12 @@ body::before {
   100% {
     background-position: 0% 50%;
   }
+}
+
+@keyframes pulse {
+  0% { opacity: 0.95; }
+  50% { opacity: 0.85; }
+  100% { opacity: 0.95; }
 }
 
 .animated-gradient {
@@ -94,7 +100,19 @@ header {
   backdrop-filter: blur(10px);
   box-shadow: 0 8px 20px rgba(0,0,0,0.08);
   border-bottom: 1px solid rgba(0,0,0,0.05);
-  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s ease;
+  animation: headerReveal 1s ease-out;
+}
+
+@keyframes headerReveal {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 header.scroll-down {
@@ -103,7 +121,7 @@ header.scroll-down {
 
 header.scroll-up {
   transform: translateY(0);
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.98);
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 }
 
@@ -111,13 +129,32 @@ header .site-title {
   font-family: 'Cairo', sans-serif;
   font-weight: 900;
   font-size: 1.75rem;
-  color: var(--primary-color);
+  background: linear-gradient(45deg, var(--primary-color) 30%, #000 70%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: gradientText 3s ease infinite;
   letter-spacing: -0.03em;
   text-transform: uppercase;
-  transition: transform 0.3s ease;
+}
+
+header .site-title .cz-text {
+  color: var(--primary-color);
+  font-size: 2.25rem;
+  margin-right: 2px;
 }
 
 header .site-title:hover {
+  transform: scale(1.05);
+}
+
+header img {
+  height: 4rem; 
+  width: auto;
+  transition: transform 0.3s ease;
+}
+
+header img:hover {
   transform: scale(1.05);
 }
 
@@ -149,10 +186,36 @@ header nav a:hover::after {
   width: 100%;
 }
 
+/* Logo image adjustments */
+@media (max-width: 768px) {
+  header .site-title {
+    font-size: 1.5rem;
+  }
+  
+  header .site-title .cz-text {
+    font-size: 1.75rem;
+  }
+  
+  header img {
+    height: 3.5rem;
+  }
+}
+
+/* Mobile menu animation */
+#mobile-menu {
+  transition: all 0.3s ease-in-out;
+  max-height: 0;
+  overflow: hidden;
+}
+
+#mobile-menu.active {
+  max-height: 300px;
+}
+
 /* Enhanced video showcase */
 .video-showcase {
   position: relative;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
@@ -164,8 +227,8 @@ header nav a:hover::after {
 }
 
 .video-showcase:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.2);
 }
 
 .video-showcase:hover img,
@@ -220,8 +283,15 @@ header nav a:hover::after {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform: translateY(0);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
+  animation: cardFloat 6s ease-in-out infinite;
+}
+
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
 .product-card::before {
@@ -246,8 +316,8 @@ header nav a:hover::after {
 }
 
 .product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
 }
 
 .product-card:hover h3 {
@@ -263,12 +333,14 @@ header nav a:hover::after {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   padding: 2rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform: translateY(0);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: cardFloat 6s ease-in-out infinite;
 }
 
 .service-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
 }
 
 .service-card .icon-container {
@@ -281,7 +353,13 @@ header nav a:hover::after {
   justify-content: center;
   margin: 0 auto 1.5rem;
   transition: all 0.4s ease;
-  animation: float 3s ease-in-out infinite;
+  animation: iconPulse 2s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
 }
 
 .service-card:hover .icon-container {
@@ -305,9 +383,11 @@ header nav a:hover::after {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   padding: 2rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform: translateY(0);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  animation: cardFloat 6s ease-in-out infinite;
 }
 
 .testimonial-card::before {
@@ -328,8 +408,8 @@ header nav a:hover::after {
 }
 
 .testimonial-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
 }
 
 /* Enhanced contact form */
@@ -453,6 +533,22 @@ section::before {
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.3s ease;
+}
+
+section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.03), transparent);
+  animation: sectionGlow 10s ease-in-out infinite;
+}
+
+@keyframes sectionGlow {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
 }
 
 section:hover::before {
@@ -586,6 +682,11 @@ footer .newsletter-form button:hover {
   background: #ff3d42;
 }
 
+footer img {
+  height: 4rem; 
+  width: auto;
+}
+
 /* Enhanced buttons */
 .btn-primary {
   position: relative;
@@ -657,50 +758,53 @@ textarea:focus {
 }
 
 /* Enhanced animations */
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(227, 30, 36, 0.7);
-  }
-  
-  70% {
-    transform: scale(1.05);
-    box-shadow: 0 0 0 10px rgba(227, 30, 36, 0);
-  }
-  
-  100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(227, 30, 36, 0);
-  }
+a, button, input, .card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
+.about-section-content .text-4xl {
+  animation: statsFloat 4s ease-in-out infinite;
 }
 
-@keyframes count-up {
-  to {
-    counter-increment: count attr(data-count);
-    content: counter(count);
-  }
+@keyframes statsFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+#about .grid > div {
+  background: rgba(255, 255, 255, 0.05);  
+  border: 1px solid rgba(227, 30, 36, 0.1);  
+  backdrop-filter: blur(10px);  
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);  
+}
+
+#about .grid > div:hover {
+  background: rgba(255, 255, 255, 0.1);  
+  transform: translateY(-5px) scale(1.05);  
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);  
+}
+
+#about .grid > div .text-4xl {
+  color: var(--primary-color);  
+  transition: color 0.3s ease;
+}
+
+#about .grid > div:hover .text-4xl {
+  color: #cc1919;  
+}
+
+#about .grid > div .text-gray-400 {
+  color: rgba(255, 255, 255, 0.7);  
+  transition: color 0.3s ease;
+}
+
+#about .grid > div:hover .text-gray-400 {
+  color: rgba(255, 255, 255, 0.9);  
 }
 
 html {
   scroll-behavior: smooth;
-}
-
-.service-card:hover, .testimonial-card:hover, .product-card:hover {
-  background: rgba(48, 48, 48, 0.9);
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 768px) {
