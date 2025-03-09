@@ -975,3 +975,190 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+// Add animated counting for statistics
+function animateStatistics() {
+  const stats = document.querySelectorAll('#about .text-4xl');
+  
+  stats.forEach(stat => {
+    // Get the target number from the text content
+    let target = parseInt(stat.textContent);
+    if (stat.textContent.includes('+')) {
+      target = parseInt(stat.textContent);
+    }
+    if (stat.textContent.includes('/')) {
+      // For 24/7 case, don't animate
+      return;
+    }
+    
+    // Start from 0
+    let current = 0;
+    
+    // Calculate increment
+    const increment = target / 50; // Will take 50 steps to reach target
+    
+    // Start counter
+    const counter = setInterval(() => {
+      current += increment;
+      
+      // Update the display
+      if (current < target) {
+        stat.textContent = Math.floor(current) + (stat.textContent.includes('+') ? '+' : '');
+      } else {
+        stat.textContent = target + (stat.textContent.includes('+') ? '+' : '');
+        clearInterval(counter);
+      }
+    }, 40); // 40ms interval means animation will take ~2 seconds
+  });
+}
+
+// Initialize counter animation when the about section becomes visible
+const aboutSection = document.querySelector('#about');
+if (aboutSection) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateStatistics();
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  observer.observe(aboutSection);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize GSAP animations
+  gsap.registerPlugin(ScrollTrigger);
+  
+  // Animate stats numbers with GSAP
+  const statsAnimation = gsap.utils.toArray('#about .text-4xl').forEach((stat, i) => {
+    let endValue = parseInt(stat.textContent);
+    if (isNaN(endValue)) return; // Skip if not a number (e.g., 24/7)
+    
+    gsap.from(stat, {
+      textContent: 0,
+      duration: 2,
+      ease: "power1.out",
+      scrollTrigger: {
+        trigger: stat,
+        start: "top 80%",
+      },
+      snap: { textContent: 1 },
+      stagger: 0.2,
+    });
+  });
+  
+  // Animate services on scroll
+  gsap.utils.toArray('.service-card').forEach((card, i) => {
+    gsap.from(card, {
+      opacity: 0,
+      y: 50,
+      rotation: -5,
+      duration: 0.8,
+      ease: "back.out(1.7)",
+      scrollTrigger: {
+        trigger: card,
+        start: "top 80%",
+      },
+      delay: i * 0.2
+    });
+  });
+  
+  // Animate product cards on scroll
+  gsap.utils.toArray('.product-card').forEach((card, i) => {
+    gsap.from(card, {
+      opacity: 0,
+      y: 50,
+      scale: 0.9,
+      duration: 0.8,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: card,
+        start: "top 80%",
+      },
+      delay: i * 0.1
+    });
+  });
+  
+  // Animate testimonial cards
+  gsap.utils.toArray('.testimonial-card').forEach((card, i) => {
+    gsap.from(card, {
+      opacity: 0,
+      x: i % 2 === 0 ? -50 : 50,
+      duration: 0.8,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: card,
+        start: "top 80%",
+      }
+    });
+  });
+  
+  // Animate section headings
+  gsap.utils.toArray('section h2').forEach(heading => {
+    gsap.from(heading, {
+      opacity: 0,
+      y: 30,
+      duration: 0.8,
+      ease: "back.out(1.7)",
+      scrollTrigger: {
+        trigger: heading,
+        start: "top 80%",
+      }
+    });
+  });
+  
+  // Enhanced hover animations for buttons
+  const buttons = document.querySelectorAll('.btn-primary');
+  buttons.forEach(button => {
+    button.addEventListener('mouseenter', () => {
+      gsap.to(button, {
+        scale: 1.05,
+        duration: 0.3,
+        ease: "power2.out"
+      });
+    });
+    
+    button.addEventListener('mouseleave', () => {
+      gsap.to(button, {
+        scale: 1,
+        duration: 0.3,
+        ease: "power2.in"
+      });
+    });
+  });
+  
+  // Animate logo on load
+  gsap.from('header img', {
+    opacity: 0,
+    scale: 0.5,
+    rotation: 360,
+    duration: 1,
+    ease: "back.out(1.7)"
+  });
+  
+  // Animate hero section
+  gsap.from('#home h1', {
+    opacity: 0,
+    y: 50,
+    duration: 1,
+    ease: "power2.out"
+  });
+  
+  gsap.from('#home p', {
+    opacity: 0,
+    y: 30,
+    duration: 1,
+    delay: 0.3,
+    ease: "power2.out"
+  });
+  
+  gsap.from('#hero-button', {
+    opacity: 0,
+    y: 30,
+    duration: 1,
+    delay: 0.6,
+    ease: "back.out(1.7)"
+  });
+});
