@@ -136,12 +136,26 @@ header .site-title {
   animation: gradientText 3s ease infinite;
   letter-spacing: -0.03em;
   text-transform: uppercase;
+  position: relative;
+  animation: titlePulse 2s ease-in-out infinite;
+}
+
+@keyframes titlePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
 }
 
 header .site-title .cz-text {
   color: var(--primary-color);
   font-size: 2.25rem;
   margin-right: 2px;
+  display: inline-block;
+  animation: czBounce 2s ease-in-out infinite;
+}
+
+@keyframes czBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
 }
 
 header .site-title:hover {
@@ -286,12 +300,18 @@ header nav a:hover::after {
   transform: translateY(0);
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  animation: cardFloat 6s ease-in-out infinite;
+  animation: productCardReveal 0.8s ease-out;
 }
 
-@keyframes cardFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+@keyframes productCardReveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .product-card::before {
@@ -335,7 +355,18 @@ header nav a:hover::after {
   padding: 2rem;
   transform: translateY(0);
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  animation: cardFloat 6s ease-in-out infinite;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .service-card:hover {
@@ -363,7 +394,12 @@ header nav a:hover::after {
 }
 
 .service-card:hover .icon-container {
-  transform: rotateY(180deg);
+  animation: iconSpin 0.6s ease-out;
+}
+
+@keyframes iconSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .service-card i {
@@ -387,7 +423,12 @@ header nav a:hover::after {
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
-  animation: cardFloat 6s ease-in-out infinite;
+  animation: testimonialFloat 6s ease-in-out infinite;
+}
+
+@keyframes testimonialFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
 .testimonial-card::before {
@@ -482,6 +523,13 @@ header nav a:hover::after {
   overflow: hidden;
   z-index: 1;
   transition: all 0.4s ease;
+  animation: buttonPulse 2s infinite;
+}
+
+@keyframes buttonPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(227, 30, 36, 0.4); }
+  100% { transform: scale(1); }
 }
 
 .hero-button::before {
@@ -505,10 +553,6 @@ header nav a:hover::after {
   box-shadow: 0 7px 15px rgba(227, 30, 36, 0.4);
 }
 
-#hero-button {
-  animation: pulse 2s infinite;
-}
-
 /* Sections */
 section {
   background: rgba(26, 26, 26, 0.7);
@@ -516,6 +560,18 @@ section {
   position: relative;
   overflow: hidden;
   transition: all 0.5s ease-in-out;
+  animation: sectionFadeIn 1s ease-out;
+}
+
+@keyframes sectionFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 section::before {
@@ -528,7 +584,7 @@ section::before {
   background: radial-gradient(
     circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
     rgba(227, 30, 36, 0.1),
-    transparent 50%
+    transparent !important
   );
   pointer-events: none;
   opacity: 0;
@@ -701,6 +757,13 @@ footer img {
   font-weight: 700;
   text-align: center;
   display: inline-block;
+  animation: buttonPulse 2s infinite;
+}
+
+@keyframes buttonPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(227, 30, 36, 0.4); }
+  100% { transform: scale(1); }
 }
 
 .btn-primary::before {
@@ -721,6 +784,23 @@ footer img {
 .btn-primary:hover {
   transform: translateY(-3px);
   box-shadow: 0 7px 15px rgba(227, 30, 36, 0.4);
+}
+
+/* Enhanced stats cards */
+#about .grid > div {
+  animation: cardFloat 6s ease-in-out infinite;
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+#about .grid > div:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
 
 /* Form enhancements */
@@ -771,42 +851,6 @@ a, button, input, .card {
   50% { transform: translateY(-5px); }
 }
 
-#about .grid > div {
-  background: rgba(255, 255, 255, 0.05);  
-  border: 1px solid rgba(227, 30, 36, 0.1);  
-  backdrop-filter: blur(10px);  
-  transition: all 0.4s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);  
-}
-
-#about .grid > div:hover {
-  background: rgba(255, 255, 255, 0.1);  
-  transform: translateY(-5px) scale(1.05);  
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);  
-}
-
-#about .grid > div .text-4xl {
-  color: var(--primary-color);  
-  transition: color 0.3s ease;
-}
-
-#about .grid > div:hover .text-4xl {
-  color: #cc1919;  
-}
-
-#about .grid > div .text-gray-400 {
-  color: rgba(255, 255, 255, 0.7);  
-  transition: color 0.3s ease;
-}
-
-#about .grid > div:hover .text-gray-400 {
-  color: rgba(255, 255, 255, 0.9);  
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
 @media (max-width: 768px) {
   #home h1 {
     font-size: 2.5rem !important;
@@ -827,4 +871,8 @@ html {
   footer .newsletter-form {
     margin-top: 1.5rem;
   }
+}
+
+html {
+  scroll-behavior: smooth;
 }
