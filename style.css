@@ -100,7 +100,7 @@ header {
   backdrop-filter: blur(10px);
   box-shadow: 0 8px 20px rgba(0,0,0,0.08);
   border-bottom: 1px solid rgba(0,0,0,0.05);
-  transition: all 0.3s ease;
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
   animation: headerReveal 1s ease-out;
 }
 
@@ -121,7 +121,7 @@ header.scroll-down {
 
 header.scroll-up {
   transform: translateY(0);
-  background: rgba(255, 255, 255, 0.98);
+  background: rgba(255, 255, 255, 0.95);
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 }
 
@@ -136,39 +136,16 @@ header .site-title {
   animation: gradientText 3s ease infinite;
   letter-spacing: -0.03em;
   text-transform: uppercase;
-  position: relative;
-  animation: titlePulse 2s ease-in-out infinite;
-}
-
-@keyframes titlePulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
 }
 
 header .site-title .cz-text {
   color: var(--primary-color);
   font-size: 2.25rem;
+  -webkit-text-fill-color: var(--primary-color);
   margin-right: 2px;
-  display: inline-block;
-  animation: czBounce 2s ease-in-out infinite;
-}
-
-@keyframes czBounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
 }
 
 header .site-title:hover {
-  transform: scale(1.05);
-}
-
-header img {
-  height: 4rem; 
-  width: auto;
-  transition: transform 0.3s ease;
-}
-
-header img:hover {
   transform: scale(1.05);
 }
 
@@ -198,32 +175,6 @@ header nav a:hover {
 
 header nav a:hover::after {
   width: 100%;
-}
-
-/* Logo image adjustments */
-@media (max-width: 768px) {
-  header .site-title {
-    font-size: 1.5rem;
-  }
-  
-  header .site-title .cz-text {
-    font-size: 1.75rem;
-  }
-  
-  header img {
-    height: 3.5rem;
-  }
-}
-
-/* Mobile menu animation */
-#mobile-menu {
-  transition: all 0.3s ease-in-out;
-  max-height: 0;
-  overflow: hidden;
-}
-
-#mobile-menu.active {
-  max-height: 300px;
 }
 
 /* Enhanced video showcase */
@@ -300,18 +251,12 @@ header nav a:hover::after {
   transform: translateY(0);
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  animation: productCardReveal 0.8s ease-out;
+  animation: cardFloat 6s ease-in-out infinite;
 }
 
-@keyframes productCardReveal {
-  from {
-    opacity: 0;
-    transform: translateY(30px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
 .product-card::before {
@@ -355,18 +300,7 @@ header nav a:hover::after {
   padding: 2rem;
   transform: translateY(0);
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  animation: fadeInUp 0.6s ease-out;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  animation: cardFloat 6s ease-in-out infinite;
 }
 
 .service-card:hover {
@@ -394,12 +328,7 @@ header nav a:hover::after {
 }
 
 .service-card:hover .icon-container {
-  animation: iconSpin 0.6s ease-out;
-}
-
-@keyframes iconSpin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  transform: rotateY(180deg);
 }
 
 .service-card i {
@@ -423,12 +352,7 @@ header nav a:hover::after {
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
-  animation: testimonialFloat 6s ease-in-out infinite;
-}
-
-@keyframes testimonialFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  animation: cardFloat 6s ease-in-out infinite;
 }
 
 .testimonial-card::before {
@@ -523,13 +447,6 @@ header nav a:hover::after {
   overflow: hidden;
   z-index: 1;
   transition: all 0.4s ease;
-  animation: buttonPulse 2s infinite;
-}
-
-@keyframes buttonPulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(227, 30, 36, 0.4); }
-  100% { transform: scale(1); }
 }
 
 .hero-button::before {
@@ -553,6 +470,10 @@ header nav a:hover::after {
   box-shadow: 0 7px 15px rgba(227, 30, 36, 0.4);
 }
 
+#hero-button {
+  animation: pulse 2s infinite;
+}
+
 /* Sections */
 section {
   background: rgba(26, 26, 26, 0.7);
@@ -560,18 +481,6 @@ section {
   position: relative;
   overflow: hidden;
   transition: all 0.5s ease-in-out;
-  animation: sectionFadeIn 1s ease-out;
-}
-
-@keyframes sectionFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 section::before {
@@ -584,7 +493,7 @@ section::before {
   background: radial-gradient(
     circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
     rgba(227, 30, 36, 0.1),
-    transparent !important
+    transparent 50%
   );
   pointer-events: none;
   opacity: 0;
@@ -738,11 +647,6 @@ footer .newsletter-form button:hover {
   background: #ff3d42;
 }
 
-footer img {
-  height: 4rem; 
-  width: auto;
-}
-
 /* Enhanced buttons */
 .btn-primary {
   position: relative;
@@ -757,13 +661,6 @@ footer img {
   font-weight: 700;
   text-align: center;
   display: inline-block;
-  animation: buttonPulse 2s infinite;
-}
-
-@keyframes buttonPulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(227, 30, 36, 0.4); }
-  100% { transform: scale(1); }
 }
 
 .btn-primary::before {
@@ -784,23 +681,6 @@ footer img {
 .btn-primary:hover {
   transform: translateY(-3px);
   box-shadow: 0 7px 15px rgba(227, 30, 36, 0.4);
-}
-
-/* Enhanced stats cards */
-#about .grid > div {
-  animation: cardFloat 6s ease-in-out infinite;
-  transition: all 0.4s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-}
-
-@keyframes cardFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-#about .grid > div:hover {
-  transform: translateY(-5px) scale(1.05);
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
 
 /* Form enhancements */
@@ -851,6 +731,10 @@ a, button, input, .card {
   50% { transform: translateY(-5px); }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 @media (max-width: 768px) {
   #home h1 {
     font-size: 2.5rem !important;
@@ -871,8 +755,4 @@ a, button, input, .card {
   footer .newsletter-form {
     margin-top: 1.5rem;
   }
-}
-
-html {
-  scroll-behavior: smooth;
 }
