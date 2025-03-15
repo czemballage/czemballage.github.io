@@ -305,6 +305,176 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
+// Modified loading sequence
+document.addEventListener('DOMContentLoaded', function() {
+  window.addEventListener('load', function() {
+    const loadingScreen = document.getElementById('loading-screen');
+    
+    // Remove loading screen after delay
+    setTimeout(() => {
+      gsap.to(loadingScreen, {
+        opacity: 0,
+        duration: 0.8,
+        ease: "power2.inOut",
+        onComplete: () => {
+          loadingScreen.style.visibility = "hidden";
+          setTimeout(() => loadingScreen.remove(), 100);
+        }
+      });
+    }, 2800);
+  });
+  
+  // Initialize GSAP animations
+  gsapInit();
+  
+  // Enhanced mobile menu functionality
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  
+  if (mobileMenuButton && mobileMenu) {
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('active');
+      mobileMenu.classList.toggle('hidden');
+      
+      if(mobileMenu.classList.contains('active')) {
+        gsap.to(mobileMenu, {
+          maxHeight: '300px',
+          duration: 0.3,
+          ease: 'power2.out'
+        });
+        mobileMenuButton.innerHTML = '<i class="ri-close-line ri-2x"></i>';
+      } else {
+        gsap.to(mobileMenu, {
+          maxHeight: 0,
+          duration: 0.3,
+          ease: 'power2.in',
+          onComplete: () => mobileMenu.classList.add('hidden')
+        });
+        mobileMenuButton.innerHTML = '<i class="ri-menu-line ri-2x"></i>';
+      }
+    });
+  }
+  
+  // Close mobile menu when clicking on links
+  if (mobileMenu) {
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        mobileMenuButton.innerHTML = '<i class="ri-menu-line ri-2x"></i>';
+      });
+    });
+  }
+
+  // Initialize video carousel with better transitions
+  initEnhancedVideoCarousel();
+  
+  // Animate product cards on hover with better effects
+  initProductCards();
+  
+  // Add animated gradient background
+  const body = document.body;
+  body.classList.add('animated-gradient');
+  
+  // Add parallax effect to sections
+  const sections = document.querySelectorAll('section');
+  sections.forEach(section => {
+    window.addEventListener('scroll', () => {
+      const scrollPosition = window.scrollY;
+      const sectionTop = section.offsetTop;
+      const distance = sectionTop - scrollPosition;
+      
+      if (section.querySelector('.bg-parallax')) {
+        section.querySelector('.bg-parallax').style.transform = `translateY(${distance * 0.1}px)`;
+      }
+    });
+  });
+  
+  // Add hover effects to all cards and buttons
+  const cards = document.querySelectorAll('.product-card, .service-card, .testimonial-card, .video-showcase');
+  cards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      gsap.to(card, {
+        y: -10,
+        boxShadow: '0 20px 25px rgba(0, 0, 0, 0.2)',
+        duration: 0.3,
+        ease: 'power2.out'
+      });
+    });
+    
+    card.addEventListener('mouseleave', () => {
+      gsap.to(card, {
+        y: 0,
+        boxShadow: '0 5px 15px rgba(0, 0, 0, 0.1)',
+        duration: 0.3,
+        ease: 'power2.in'
+      });
+    });
+  });
+  
+  // Fix scroll animations
+  ScrollTrigger.batch(".fade-in", {
+    onEnter: batch => gsap.to(batch, {
+      opacity: 1,
+      y: 0,
+      stagger: 0.15,
+      duration: 0.8,
+      ease: "power2.out"
+    }),
+    start: "top 85%"
+  });
+  
+  // Enhanced logo animation
+  const logo = document.querySelector('header img');
+  if (logo) {
+    logo.addEventListener('mouseenter', () => {
+      gsap.to(logo, {
+        scale: 1.1,
+        duration: 0.3,
+        ease: "power2.out"
+      });
+    });
+    
+    logo.addEventListener('mouseleave', () => {
+      gsap.to(logo, {
+        scale: 1,
+        duration: 0.3,
+        ease: "power2.in"
+      });
+    });
+  }
+  
+  // Add smooth reveal animations as sections come into view
+  gsap.registerPlugin(ScrollTrigger);
+  
+  gsap.utils.toArray('section').forEach(section => {
+    gsap.from(section.querySelectorAll('h2, h3, p, .grid > div'), {
+      y: 50,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: section,
+        start: 'top 80%',
+        end: 'top 50%',
+        toggleActions: 'play none none none'
+      }
+    });
+  });
+  
+  // Add animated text typing effect to main header
+  const heroTitle = document.querySelector('#home h1');
+  if (heroTitle) {
+    const text = heroTitle.textContent;
+    heroTitle.textContent = '';
+    
+    for (let i = 0; i < text.length; i++) {
+      setTimeout(() => {
+        heroTitle.textContent += text[i];
+      }, 100 * i);
+    }
+  }
+});
+
 // GSAP animations initialization
 function gsapInit() {
   // Register ScrollTrigger plugin
@@ -436,8 +606,8 @@ function initProductCards() {
       const y = e.clientY - rect.top;
       
       // Calculate rotation values based on mouse position
-      const rotateY = ((x - rect.width / 2) / rect.width) * 10;
-      const rotateX = ((y - rect.height / 2) / rect.height) * -10;
+      const rotateY = ((x - rect.width / 2) / rect.width) * 12;
+      const rotateX = ((y - rect.height / 2) / rect.height) * -12;
       
       // Apply 3D effect
       gsap.to(card, {
@@ -458,8 +628,8 @@ function initProductCards() {
       gsap.to(card, {
         rotateX: 0,
         rotateY: 0,
-        duration: 0.5,
-        ease: 'elastic.out(1,0.5)'
+        duration: 0.6,
+        ease: 'elastic.out(1,0.6)'
       });
     });
   });
@@ -879,9 +1049,9 @@ function initSectionAnimations() {
         scrub: 1
       },
       opacity: 0.5,
-      scale: 0.95,
-      filter: 'blur(10px)',
-      duration: 1
+      scale: 0.97,
+      filter: 'blur(5px)',
+      duration: 1.2
     });
   });
 }
@@ -1026,6 +1196,112 @@ if (aboutSection) {
 
   observer.observe(aboutSection);
 }
+
+// Enhanced mobile scroll handling
+function initMobileScroll() {
+  const scrollContainers = document.querySelectorAll('.product-carousel, .video-carousel-mobile, .scroll-container');
+  
+  scrollContainers.forEach(container => {
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+    let momentum = 0;
+    let rafId = null;
+
+    container.addEventListener('mousedown', (e) => {
+      isDown = true;
+      container.style.cursor = 'grabbing';
+      startX = e.pageX - container.offsetLeft;
+      scrollLeft = container.scrollLeft;
+      cancelAnimationFrame(rafId);
+    });
+
+    container.addEventListener('mouseleave', () => {
+      isDown = false;
+      container.style.cursor = 'grab';
+    });
+
+    container.addEventListener('mouseup', () => {
+      isDown = false;
+      container.style.cursor = 'grab';
+      
+      // Add momentum scrolling
+      let startTime = Date.now();
+      const momentumScroll = () => {
+        const now = Date.now();
+        const elapsed = now - startTime;
+        
+        if (elapsed > 1000 || Math.abs(momentum) < 0.5) {
+          cancelAnimationFrame(rafId);
+          return;
+        }
+        
+        container.scrollLeft += momentum;
+        momentum *= 0.95; // Decay factor
+        
+        rafId = requestAnimationFrame(momentumScroll);
+      };
+      
+      rafId = requestAnimationFrame(momentumScroll);
+    });
+
+    container.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - container.offsetLeft;
+      const walk = (x - startX) * 1.5; // Scroll speed
+      const prevScrollLeft = container.scrollLeft;
+      container.scrollLeft = scrollLeft - walk;
+      
+      // Calculate momentum based on scroll difference
+      momentum = prevScrollLeft - container.scrollLeft;
+    });
+    
+    // Touch events with improved momentum
+    container.addEventListener('touchstart', (e) => {
+      isDown = true;
+      startX = e.touches[0].pageX - container.offsetLeft;
+      scrollLeft = container.scrollLeft;
+      cancelAnimationFrame(rafId);
+    }, { passive: true });
+
+    container.addEventListener('touchend', () => {
+      isDown = false;
+      
+      // Add momentum scrolling
+      let startTime = Date.now();
+      const momentumScroll = () => {
+        const now = Date.now();
+        const elapsed = now - startTime;
+        
+        if (elapsed > 1000 || Math.abs(momentum) < 0.5) {
+          cancelAnimationFrame(rafId);
+          return;
+        }
+        
+        container.scrollLeft += momentum;
+        momentum *= 0.95; // Decay factor
+        
+        rafId = requestAnimationFrame(momentumScroll);
+      };
+      
+      rafId = requestAnimationFrame(momentumScroll);
+    }, { passive: true });
+
+    container.addEventListener('touchmove', (e) => {
+      if (!isDown) return;
+      const x = e.touches[0].pageX - container.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      const prevScrollLeft = container.scrollLeft;
+      container.scrollLeft = scrollLeft - walk;
+      
+      // Calculate momentum based on scroll difference
+      momentum = prevScrollLeft - container.scrollLeft;
+    }, { passive: true });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', initMobileScroll);
 
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize GSAP animations
