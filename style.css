@@ -232,17 +232,17 @@ header nav a:hover::after {
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
   border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  background: rgba(38, 38, 38, 0.8);
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+  background: rgba(38, 38, 38, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   transform-style: preserve-3d;
   perspective: 1000px;
 }
 
 .video-showcase:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+  transform: translateY(-12px) scale(1.03);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.25);
 }
 
 .video-showcase:hover img,
@@ -292,14 +292,15 @@ header nav a:hover::after {
 
 /* Enhanced product cards */
 .product-card {
-  background: rgba(38, 38, 38, 0.8);
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(38, 38, 38, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 16px;
   overflow: hidden;
   transform: translateY(0);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
   animation: productCardReveal 0.8s ease-out;
 }
 
@@ -348,14 +349,15 @@ header nav a:hover::after {
 
 /* Enhanced service cards */
 .service-card {
-  background: rgba(38, 38, 38, 0.8);
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(38, 38, 38, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 16px;
   padding: 2rem;
   transform: translateY(0);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   animation: fadeInUp 0.6s ease-out;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
 
 @keyframes fadeInUp {
@@ -414,16 +416,17 @@ header nav a:hover::after {
 
 /* Enhanced testimonial cards */
 .testimonial-card {
-  background: rgba(38, 38, 38, 0.8);
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(38, 38, 38, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 16px;
   padding: 2rem;
   transform: translateY(0);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
   animation: testimonialFloat 6s ease-in-out infinite;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.2);
 }
 
 @keyframes testimonialFloat {
@@ -688,16 +691,19 @@ footer .social-icons a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
   background: rgba(255,255,255,0.1);
   transition: all 0.3s ease;
+  margin-right: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 footer .social-icons a:hover {
   background: var(--primary-color);
-  transform: translateY(-5px);
+  transform: translateY(-5px) scale(1.1);
+  box-shadow: 0 8px 20px rgba(227, 30, 36, 0.3);
 }
 
 footer .newsletter-form {
@@ -743,14 +749,22 @@ footer img {
   width: auto;
 }
 
+footer .site-title .cz-text {
+  color: var(--primary-color);
+}
+
+footer .site-title span:not(.cz-text) {
+  color: white;
+}
+
 /* Enhanced buttons */
 .btn-primary {
   position: relative;
   overflow: hidden;
   background: var(--primary-color);
   color: white;
-  border-radius: 8px;
-  padding: 1rem 2rem;
+  border-radius: 12px;
+  padding: 1.1rem 2.2rem;
   transition: all 0.3s ease;
   border: none;
   cursor: pointer;
@@ -758,6 +772,7 @@ footer img {
   text-align: center;
   display: inline-block;
   animation: buttonPulse 2s infinite;
+  box-shadow: 0 8px 20px rgba(227, 30, 36, 0.3);
 }
 
 @keyframes buttonPulse {
@@ -781,8 +796,9 @@ footer img {
 }
 
 .btn-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 7px 15px rgba(227, 30, 36, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 25px rgba(227, 30, 36, 0.5);
+  background: #ff2328;
 }
 
 /* Enhanced stats cards */
@@ -850,6 +866,210 @@ a, button, input, .card {
   50% { transform: translateY(-5px); }
 }
 
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+}
+
+#loading-screen.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loading-content {
+  text-align: center;
+  position: relative;
+  height: 400px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.loading-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2.8rem;
+  font-weight: 900;
+  opacity: 0;
+  margin-top: 0;
+  animation: moveTextFromCenter 1.2s ease-out forwards;
+}
+
+@keyframes moveTextFromCenter {
+  0% {
+    opacity: 0;
+    top: 50%;
+  }
+  20% {
+    opacity: 1;
+    top: 50%;
+  }
+  100% {
+    opacity: 1;
+    top: calc(100% - 50px); 
+  }
+}
+
+.loading-text .cz {
+  color: #E31E24;
+}
+
+.loading-text .emballage {
+  color: #1A1A1A;
+}
+
+dotlottie-player {
+  opacity: 0;
+  animation: showPlayer 0.5s ease-out forwards 1s;
+}
+
+@keyframes showPlayer {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Mobile-friendly horizontal scrolling */
+.scroll-container, 
+.product-carousel, 
+.video-carousel-mobile {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  white-space: nowrap;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  gap: 1.5rem;
+  padding: 1.5rem 0.5rem;
+  cursor: grab;
+  mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+}
+
+.scroll-container:active, 
+.product-carousel:active, 
+.video-carousel-mobile:active {
+  cursor: grabbing;
+}
+
+.scroll-item {
+  scroll-snap-align: start;
+  flex: 0 0 85%;
+  max-width: 85%;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .scroll-item {
+    flex: 0 0 45%;
+    max-width: 45%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .scroll-item {
+    flex: 0 0 30%;
+    max-width: 30%;
+  }
+}
+
+/* Video and image showcase improvements */
+.product-carousel,
+.video-carousel-mobile {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+.product-carousel::-webkit-scrollbar,
+.video-carousel-mobile::-webkit-scrollbar {
+  display: none;
+}
+
+.product-card,
+.video-showcase {
+  scroll-snap-align: start;
+  flex: 0 0 85%;
+  max-width: 85%;
+  margin-right: 0;
+  transform: none;
+}
+
+@media (min-width: 768px) {
+  .product-card,
+  .video-showcase {
+    flex: 0 0 45%;
+    max-width: 45%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .product-card,
+  .video-showcase {
+    flex: 0 0 30%;
+    max-width: 30%;
+  }
+}
+
+/* Touch interaction improvements */
+.product-carousel,
+.video-carousel-mobile {
+  touch-action: pan-x;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Maintain aspect ratio for images and videos */
+.product-card img,
+.video-showcase iframe {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+}
+
+/* Improved spacing and padding for mobile */
+@media (max-width: 767px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .product-carousel,
+  .video-carousel-mobile {
+    margin-left: -1rem;
+    margin-right: -1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .product-card,
+  .video-showcase {
+    margin-bottom: 0;
+  }
+}
+
 @media (max-width: 768px) {
   #home h1 {
     font-size: 2.5rem !important;
@@ -869,6 +1089,50 @@ a, button, input, .card {
   
   footer .newsletter-form {
     margin-top: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  main {
+    padding-top: 5rem;
+  }
+  
+  header,
+  footer {
+    padding: 1rem;
+  }
+  
+  .container {
+    padding: 0 1.5rem;
+  }
+  
+  .product-carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 1rem;
+    padding: 1rem 0;
+  }
+  .product-carousel > div {
+    flex: 0 0 80%;
+    scroll-snap-align: center;
+  }
+  
+  .video-carousel-mobile {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 1rem;
+    padding: 1rem 0;
+  }
+  .video-carousel-mobile > div {
+    flex: 0 0 90%;
+    scroll-snap-align: center;
+  }
+  
+  img {
+    max-width: 100%;
+    height: auto;
   }
 }
 
