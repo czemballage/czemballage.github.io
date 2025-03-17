@@ -27,39 +27,274 @@ document.querySelectorAll('.fade-in').forEach((elem) => {
   observer.observe(elem);
 });
 
-// Header scroll effect
-let lastScroll = 0;
-const header = document.querySelector('header');
-
-window.addEventListener('scroll', () => {
-  const currentScroll = window.pageYOffset;
+// Enhanced header scroll animation
+function initHeaderAnimation() {
+  const header = document.querySelector('header');
+  let lastScrollTop = 0;
   
-  if (currentScroll <= 0) {
-    header.classList.remove('scroll-up');
-    return;
-  }
-  
-  if (currentScroll > lastScroll && !header.classList.contains('scroll-down')) {
-    header.classList.remove('scroll-up');
-    header.classList.add('scroll-down');
-  } else if (currentScroll < lastScroll && header.classList.contains('scroll-down')) {
-    header.classList.remove('scroll-down');
-    header.classList.add('scroll-up');
-  }
-  lastScroll = currentScroll;
-});
-
-// Product hover effect
-document.querySelectorAll('.product-card').forEach(card => {
-  card.addEventListener('mousemove', (e) => {
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    card.style.setProperty('--mouse-x', `${x}px`);
-    card.style.setProperty('--mouse-y', `${y}px`);
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+    // Slightly different behavior for desktop and mobile
+    if (window.innerWidth > 768) {
+      // Desktop behavior
+      if (scrollTop > 100) {
+        header.style.backdropFilter = 'blur(10px)';
+        header.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+        header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
+      } else {
+        header.style.backdropFilter = 'blur(0px)';
+        header.style.backgroundColor = 'rgba(255, 255, 255, 1)';
+        header.style.boxShadow = 'none';
+      }
+    } else {
+      // Mobile behavior with hide/show on scroll
+      if (scrollTop > lastScrollTop && scrollTop > 200) {
+        // Scrolling down
+        header.classList.add('scroll-down');
+        header.classList.remove('scroll-up');
+      } else {
+        // Scrolling up
+        header.classList.remove('scroll-down');
+        header.classList.add('scroll-up');
+      }
+    }
+    
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
   });
-});
+}
+
+// Improved loading animation
+function initImprovedLoading() {
+  const loadingScreen = document.getElementById('loading-screen');
+  
+  if (loadingScreen) {
+    // Create a more dynamic loading animation
+    const loadingAnimation = gsap.timeline({
+      defaults: { ease: "power3.out" }
+    });
+    
+    loadingAnimation
+      .from('.loading-content dotlottie-player', { scale: 0.8, opacity: 0, duration: 0.8 })
+      .from('.loading-text .cz', { y: 30, opacity: 0, duration: 0.5 }, "-=0.3")
+      .from('.loading-text .emballage', { y: 30, opacity: 0, duration: 0.5 }, "-=0.2");
+    
+    // Remove loading screen with better transition
+    window.addEventListener('load', function() {
+      setTimeout(() => {
+        gsap.to(loadingScreen, {
+          opacity: 0,
+          duration: 0.8,
+          ease: "power2.inOut",
+          onComplete: () => {
+            loadingScreen.style.visibility = "hidden";
+            setTimeout(() => loadingScreen.remove(), 100);
+            // Animate page elements after loading
+            animatePageElements();
+          }
+        });
+      }, 2000);
+    });
+  }
+}
+
+// Animate page elements after loading
+function animatePageElements() {
+  // Fade in hero section elements
+  gsap.from('#home h1', { 
+    opacity: 0, 
+    y: 50, 
+    duration: 1, 
+    ease: 'power3.out' 
+  });
+  
+  gsap.from('#home p', { 
+    opacity: 0, 
+    y: 30, 
+    duration: 1, 
+    delay: 0.3, 
+    ease: 'power3.out' 
+  });
+  
+  gsap.from('#hero-button', { 
+    opacity: 0, 
+    y: 30, 
+    duration: 1, 
+    delay: 0.5, 
+    ease: 'back.out(1.7)' 
+  });
+
+  // Add smooth fade-in for all sections
+  gsap.utils.toArray('section').forEach((section, i) => {
+    gsap.from(section, {
+      opacity: 0,
+      y: 30,
+      duration: 0.8,
+      scrollTrigger: {
+        trigger: section,
+        start: 'top 80%',
+        toggleActions: 'play none none none'
+      }
+    });
+  });
+}
+
+// Enhanced hover effects for all interactive elements
+function initEnhancedInteractions() {
+  // Modern button hover effects
+  const buttons = document.querySelectorAll('.btn-primary, button:not(.carousel-nav-button)');
+  
+  buttons.forEach(button => {
+    button.addEventListener('mouseenter', () => {
+      gsap.to(button, {
+        scale: 1.05,
+        duration: 0.3,
+        ease: 'power2.out',
+        boxShadow: '0 10px 25px rgba(229, 9, 20, 0.4)'
+      });
+    });
+    
+    button.addEventListener('mouseleave', () => {
+      gsap.to(button, {
+        scale: 1,
+        duration: 0.3,
+        ease: 'power2.in',
+        boxShadow: '0 5px 15px rgba(229, 9, 20, 0.3)'
+      });
+    });
+    
+    // Add ripple effect on click
+    button.addEventListener('click', function(e) {
+      const rect = button.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const ripple = document.createElement('span');
+      ripple.classList.add('ripple');
+      ripple.style.left = `${x}px`;
+      ripple.style.top = `${y}px`;
+      
+      button.appendChild(ripple);
+      
+      setTimeout(() => {
+        ripple.remove();
+      }, 600);
+    });
+  });
+  
+  // Enhanced navigation links
+  const navLinks = document.querySelectorAll('nav a, footer a');
+  
+  navLinks.forEach(link => {
+    link.addEventListener('mouseenter', () => {
+      gsap.to(link, {
+        color: '#E50914',
+        duration: 0.3,
+        ease: 'power1.out',
+        fontWeight: 600
+      });
+    });
+    
+    link.addEventListener('mouseleave', () => {
+      gsap.to(link, {
+        color: '',
+        duration: 0.3,
+        ease: 'power1.in',
+        fontWeight: ''
+      });
+    });
+  });
+}
+
+// Enhanced parallax effects
+function initParallaxEffects() {
+  // Hero section parallax
+  gsap.to('#home', {
+    backgroundPosition: '50% 30%',
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '#home',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: true
+    }
+  });
+  
+  // Content parallax for depth
+  gsap.utils.toArray('.bg-parallax').forEach(parallaxElem => {
+    gsap.to(parallaxElem, {
+      y: -80,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: parallaxElem.parentElement,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true
+      }
+    });
+  });
+  
+  // Subtle parallax for text elements
+  gsap.utils.toArray('section h2').forEach(heading => {
+    gsap.to(heading, {
+      backgroundPositionX: '100%',
+      ease: 'none',
+      scrollTrigger: {
+        trigger: heading,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true
+      }
+    });
+  });
+}
+
+// Enhanced product cards interaction with modern 3D effect
+function initProductCards() {
+  const productCards = document.querySelectorAll('.product-card');
+  
+  productCards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      // Calculate rotation values based on mouse position
+      const rotateY = ((x - rect.width / 2) / rect.width) * 10;
+      const rotateX = ((y - rect.height / 2) / rect.height) * -10;
+      
+      // Apply improved 3D effect with more subtle movement
+      gsap.to(card, {
+        rotateX: rotateX,
+        rotateY: rotateY,
+        transformPerspective: 1000,
+        duration: 0.3,
+        ease: 'power2.out',
+        boxShadow: `${rotateY/2}px ${rotateX/-2}px 20px rgba(0,0,0,0.1)`
+      });
+      
+      // Create light reflection effect
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+      
+      // Create gradient highlight effect
+      const shine = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 60%)`;
+      card.style.backgroundImage = shine;
+    });
+    
+    card.addEventListener('mouseleave', () => {
+      // Reset card position with elastic animation
+      gsap.to(card, {
+        rotateX: 0,
+        rotateY: 0,
+        boxShadow: '0 5px 15px rgba(0,0,0,0.1)',
+        duration: 0.6,
+        ease: 'elastic.out(1,0.5)',
+        backgroundImage: 'none'
+      });
+    });
+  });
+}
 
 // Enhanced Video Carousel
 function initVideoCarousel() {
@@ -606,30 +841,37 @@ function initProductCards() {
       const y = e.clientY - rect.top;
       
       // Calculate rotation values based on mouse position
-      const rotateY = ((x - rect.width / 2) / rect.width) * 12;
-      const rotateX = ((y - rect.height / 2) / rect.height) * -12;
+      const rotateY = ((x - rect.width / 2) / rect.width) * 10;
+      const rotateX = ((y - rect.height / 2) / rect.height) * -10;
       
-      // Apply 3D effect
+      // Apply improved 3D effect with more subtle movement
       gsap.to(card, {
         rotateX: rotateX,
         rotateY: rotateY,
         transformPerspective: 1000,
         duration: 0.3,
-        ease: 'power2.out'
+        ease: 'power2.out',
+        boxShadow: `${rotateY/2}px ${rotateX/-2}px 20px rgba(0,0,0,0.1)`
       });
       
-      // Update light reflection effect
+      // Create light reflection effect
       card.style.setProperty('--mouse-x', `${x}px`);
       card.style.setProperty('--mouse-y', `${y}px`);
+      
+      // Create gradient highlight effect
+      const shine = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 60%)`;
+      card.style.backgroundImage = shine;
     });
     
     card.addEventListener('mouseleave', () => {
-      // Reset card position smoothly
+      // Reset card position with elastic animation
       gsap.to(card, {
         rotateX: 0,
         rotateY: 0,
+        boxShadow: '0 5px 15px rgba(0,0,0,0.1)',
         duration: 0.6,
-        ease: 'elastic.out(1,0.6)'
+        ease: 'elastic.out(1,0.5)',
+        backgroundImage: 'none'
       });
     });
   });
@@ -1262,7 +1504,6 @@ function initMobileScroll() {
       isDown = true;
       startX = e.touches[0].pageX - container.offsetLeft;
       scrollLeft = container.scrollLeft;
-      cancelAnimationFrame(rafId);
     }, { passive: true });
 
     container.addEventListener('touchend', () => {
@@ -1437,4 +1678,89 @@ document.addEventListener('DOMContentLoaded', () => {
     delay: 0.6,
     ease: "back.out(1.7)"
   });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  const initMobileHorizontalScroll = () => {
+    const scrollContainers = document.querySelectorAll('.product-carousel, .video-carousel-mobile');
+    
+    scrollContainers.forEach(container => {
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+      let momentum = 0;
+      let raf;
+
+      const handleMouseDown = (e) => {
+        isDown = true;
+        startX = e.pageX - container.offsetLeft;
+        scrollLeft = container.scrollLeft;
+        cancelAnimationFrame(raf);
+      };
+
+      const handleMouseLeave = () => {
+        isDown = false;
+      };
+
+      const handleMouseUp = () => {
+        isDown = false;
+        // Momentum scrolling
+        const animate = () => {
+          container.scrollLeft += momentum;
+          momentum *= 0.95;
+          if (Math.abs(momentum) > 0.5) {
+            raf = requestAnimationFrame(animate);
+          }
+        };
+        raf = requestAnimationFrame(animate);
+      };
+
+      const handleMouseMove = (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - container.offsetLeft;
+        const walk = (x - startX) * 2;
+        momentum = walk * 0.2;
+        container.scrollLeft = scrollLeft - walk;
+      };
+
+      // Touch handlers
+      const handleTouchStart = (e) => {
+        isDown = true;
+        startX = e.touches[0].pageX - container.offsetLeft;
+        scrollLeft = container.scrollLeft;
+      };
+
+      const handleTouchMove = (e) => {
+        if (!isDown) return;
+        const x = e.touches[0].pageX - container.offsetLeft;
+        const walk = (x - startX) * 2;
+        container.scrollLeft = scrollLeft - walk;
+      };
+
+      container.addEventListener('mousedown', handleMouseDown);
+      container.addEventListener('mouseup', handleMouseUp);
+      container.addEventListener('mouseleave', handleMouseLeave);
+      container.addEventListener('mousemove', handleMouseMove);
+      container.addEventListener('touchstart', handleTouchStart, { passive: true });
+      container.addEventListener('touchmove', handleTouchMove, { passive: true });
+      container.addEventListener('touchend', handleMouseUp);
+    });
+  };
+
+  initMobileHorizontalScroll();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  initHeaderAnimation();
+  initImprovedLoading();
+  initEnhancedInteractions();
+  initParallaxEffects();
+  initProductCards();
+  
+  // Initialize existing features
+  initVideoCarousel();
+  initEnhancedScrollAnimations();
+  initEnhancedVideoShowcase();
+  initEnhancedForms();
 });
